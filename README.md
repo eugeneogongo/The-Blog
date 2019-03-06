@@ -1,5 +1,8 @@
-#BlogApp
+<h1>BlogApp<h2>
 Easily turn your wordpress site into a mobile app.
+
+<h2>Art<h2>
+<img src="art/pic1.png" alt="pic">
 <h2> How to go about </h2>
 <ul>
 <li>Clone the app</h2>
