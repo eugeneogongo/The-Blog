@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -24,6 +22,8 @@ import com.youstar.bloggerssport.R;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import androidx.core.app.NotificationCompat;
 
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
@@ -95,9 +95,11 @@ public class MyFireBaseMessaging extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(new NotificationChannel("blogger", "Blogger", NotificationManager.IMPORTANCE_HIGH));
         }
 
+        assert notificationManager != null;
         notificationManager.notify(0 , notificationBuilder.build());
     }
     /*
@@ -110,12 +112,12 @@ public class MyFireBaseMessaging extends FirebaseMessagingService {
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(input);
-            return bitmap;
+            return BitmapFactory.decodeStream(input);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+
             return null;
 
         }
