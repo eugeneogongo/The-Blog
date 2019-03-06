@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">The Blog</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="alert_title">Attention!</string>
+    <string name="alert_message">Unable to load data. \nCheck your connection!</string>
+    <string name="alert_positive">Close</string>
+    <string-array name="links">
+        <item>http://www.kaluhiskitchen.com/feed/</item>
+        <item>https://www.bikozulu.co.ke/feed/</item>
+        <item>https://centonomy.com/feed</item>
+        <item>https://sunwords.com/feed/</item>
+    </string-array>
+    <string-array name="blognames">
+        <item>kaluhiskitchen</item>
+        <item>bikozulu</item>
+        <item>centonomy</item>
+        <item>sunwords</item>
+        <item>ALL</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
