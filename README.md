@@ -2,7 +2,7 @@
 Easily turn your wordpress site into a mobile app.
 
 <h2>Art<h2>
-<img src="art/pic1.png" alt="pic">
+<img src="art/pic1.png" alt="pic" width="200" height="400">
 <h2> How to go about </h2>
 <ul>
 <li>Clone the app</h2>
