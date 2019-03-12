@@ -5,23 +5,20 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.browser.customtabs.CustomTabsIntent;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.AppBarLayout;
-import androidx.core.view.ViewCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import com.prof.rssparser.Article;
 import com.yourstar.cenotomy.Share;
 import com.youstar.bloggerssport.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.view.ViewCompat;
 
 public class ViewPost extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final int PERCENTAGE_TO_SHOW_IMAGE = 20;
@@ -57,7 +54,7 @@ public class ViewPost extends AppCompatActivity implements AppBarLayout.OnOffset
                                 getResources(), R.mipmap.ic_share), "Share", pendingIntent)
                         .setToolbarColor(getResources().getColor(R.color.colorPrimary))
                         .setCloseButtonIcon(BitmapFactory.decodeResource(
-                                getResources(), R.mipmap.ic_back)).enableUrlBarHiding().setShowTitle(true);
+                                getResources(), R.mipmap.back)).enableUrlBarHiding().setShowTitle(true);
 
                 CustomTabsIntent customTabsIntent = builder.build();
                 if (url == null) {
