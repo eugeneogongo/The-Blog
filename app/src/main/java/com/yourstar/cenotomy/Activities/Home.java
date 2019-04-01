@@ -1,29 +1,16 @@
 package com.yourstar.cenotomy.Activities;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -48,6 +35,14 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Arrays;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class Home extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener{
 
     private int kaluhi=0;
@@ -64,6 +59,7 @@ public class Home extends AppCompatActivity implements DrawerAdapter.OnItemSelec
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
     private boolean doubleBackToExitPressedOnce=false;
+    boolean isaddshowin = false;
 
 
     @Override
@@ -153,7 +149,7 @@ screenIcons = ContextCompat.getDrawable(this,R.drawable.iop);
 
     @Override
     public void onItemSelected(int position) {
-        androidx.fragment.app.Fragment blog = null;
+        androidx.fragment.app.Fragment blog;
 switch (position){
 
     case 0:
@@ -170,7 +166,7 @@ switch (position){
         break;
     case 3 :
         blog = SelectedBlog.newInstance(Constants.SUNNYWORDS);
-        txttoolbar.setText("Sun Words");
+        txttoolbar.setText("Sunwords");
         break;
         default:
             txttoolbar.setText("The Blog");
@@ -178,20 +174,28 @@ switch (position){
             slidingRootNav.closeMenu();
             return;
 }
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        if (!isaddshowin) {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+                if (mInterstitialAd.isLoaded()) {
+                    isaddshowin = true;
+                }
+
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+            }
+            PrepareAds();
         }
-        PrepareAds();
+
         showFragment(blog);
         slidingRootNav.closeMenu();
 
     }
+
     private void showFragment(androidx.fragment.app.Fragment fragment) {
         getSupportFragmentManager().
                 beginTransaction().addToBackStack("fragment")
-                .replace(R.id.frag_pager,fragment).commit();
+                .replace(R.id.frag_pager, fragment).commit();
     }
     private DrawerItem createItemFor(int position) {
         return new SimpleItem(screenIcons, screenTitles[position])
@@ -239,9 +243,6 @@ switch (position){
        }else if(event==Constants.NetworkOn){
            showFragment(Articles.newInstance());
        }
-
-
-
 
     }
     @Override

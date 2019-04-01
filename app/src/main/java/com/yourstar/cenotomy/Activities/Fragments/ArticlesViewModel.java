@@ -1,9 +1,5 @@
 package com.yourstar.cenotomy.Activities.Fragments;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import android.util.Log;
 
 import com.prof.rssparser.Article;
@@ -19,13 +15,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 public class ArticlesViewModel extends ViewModel {
 
     private String [] urlString = Startup.getResource().getStringArray(R.array.links);
     private MutableLiveData<List<Article>> articlelist;
-    public LiveData<List<Article>> getArticles() {
+
+    LiveData<List<Article>> getArticles() {
         if (articlelist == null) {
-            articlelist = new MutableLiveData<List<Article>>();
+            articlelist = new MutableLiveData<>();
             loadUsers();
         }
         return articlelist;
@@ -58,7 +59,13 @@ public class ArticlesViewModel extends ViewModel {
 
                @Override
                public void onError() {
-                   EventBus.getDefault().post(Constants.NotLoaded);
+                   List<Article> list = articlelist.getValue();
+                   assert list != null;
+                   if (list.size() == 0) {
+                       EventBus.getDefault().post(Constants.NotLoaded);
+                   }
+
+
                }
            });
 

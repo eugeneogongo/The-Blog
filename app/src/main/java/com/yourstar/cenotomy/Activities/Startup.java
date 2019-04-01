@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.res.Resources;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.prof.rssparser.Article;
-import com.youstar.bloggerssport.R;
 
 
 public class Startup extends Application {
@@ -17,6 +17,7 @@ public class Startup extends Application {
         super.onCreate();
         instance = this;
         TypefaceProvider.registerDefaultIconSets();
+        FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("blogger");
         }
     public static Resources getResource() {

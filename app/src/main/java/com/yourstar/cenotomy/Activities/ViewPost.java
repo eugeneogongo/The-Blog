@@ -42,9 +42,8 @@ public class ViewPost extends AppCompatActivity implements AppBarLayout.OnOffset
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-1444752230904711/7829765668");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        String content = article.getContent();
 
-                String url = article.getLink();
+        String url = article.getLink();
                 Intent i = new Intent(getApplicationContext(), Share.class).putExtra("Link", article.getLink());
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(ViewPost.this, 0, i,PendingIntent.FLAG_UPDATE_CURRENT);

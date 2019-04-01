@@ -15,5 +15,8 @@
     <!-- inverse text color: 87% black -->
     <color name="textColorPrimaryInverse">#FFFFFF</color>
     <color name="textColorSecondaryInverse">#9E9E9E</color>
+
+    <!-- Shimmer color -->
+    <color name="background">#dddddd</color>
     
 </resources>
