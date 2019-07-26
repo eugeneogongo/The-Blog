@@ -79,7 +79,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         return new ViewHolder(v);
     }
 
-    public Palette createPaletteSync(Bitmap bitmap) {
+    private Palette createPaletteSync(Bitmap bitmap) {
         Palette p = Palette.from(bitmap).generate();
         return p;
     }
@@ -151,18 +151,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         viewHolder.category.setText("# " + currentArticle.getCategories().get(0));
 
-        viewHolder.postdesc.setText(stripHtml(currentArticle.getDescription().substring(0,150)));
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.postdesc.setText(stripHtml(currentArticle.getDescription().substring(0,150)+"..."));
+        viewHolder.itemView.setOnClickListener(view -> {
 
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(mContext, ViewPost.class);
-               intent.putExtra("link",currentArticle.getLink());
-                mContext.startActivity(intent);
+            Intent intent = new Intent(mContext, ViewPost.class);
+           intent.putExtra("link",currentArticle.getLink());
+            mContext.startActivity(intent);
 
 
-            }
         });
 
     }
@@ -187,7 +183,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         TextView category;
         CardView card;
         TextView postdesc;
-        BootstrapLabel txtblogname,txtblog2;
+        TextView txtblogname,txtblog2;
 
         public ViewHolder(View itemView) {
 

@@ -18,5 +18,6 @@
 
     <!-- Shimmer color -->
     <color name="background">#dddddd</color>
-    
+    <color name="overlay">#00FFFFFF</color>
+
 </resources>

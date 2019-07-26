@@ -12,31 +12,31 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.beardedhen.androidbootstrap.BootstrapLabel
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:bootstrapBrand="primary"
-                android:id="@+id/txtblogname"
-                android:visibility="gone"
-                android:layout_margin="10dp"
-                android:layout_gravity="center"
-                app:bootstrapHeading="h6"
-                android:text="Bootstrap Label"
-                />
+
             <FrameLayout
                 android:layout_width="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="10dp"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/postCoverImage"
                     android:src="@drawable/ic_launcher_background"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
-                    android:contentDescription="TODO" />
-
+                    android:contentDescription="Image for blog post" />
+                <com.beardedhen.androidbootstrap.BootstrapLabel
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:id="@+id/txtblogname"
+                    android:paddingEnd="5dp"
+                    android:background="@color/overlay"
+                    android:layout_gravity="center|end"
+                    android:text="Bootstrap Label"
+                    />
 
             </FrameLayout>
 
@@ -64,13 +64,22 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/postdesc"
                     android:textColor="@android:color/black"/>
-                <TextView
-                    android:id="@+id/postCategory"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/colorAccent"
-                    android:text="NEWS"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/postCategory"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/colorAccent"
+                        android:text="NEWS"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
