@@ -5,46 +5,29 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.material.appbar.AppBarLayout;
-import com.prof.rssparser.Article;
-import com.yourstar.cenotomy.Share;
-import com.youstar.bloggerssport.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.view.ViewCompat;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.yourstar.cenotomy.Share;
+import com.youstar.bloggerssport.R;
+
 public class ViewPost extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     private static final int PERCENTAGE_TO_SHOW_IMAGE = 20;
-    String title;
+
     private View mFab;
     private int mMaxScrollSize;
     private boolean mIsImageHidden;
-    Article article;
-    private InterstitialAd mInterstitialAd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        Startup startup = (Startup) getApplicationContext();
-        article = startup.getArticle();
-        title = article.getTitle();
-        MobileAds.initialize(this, "ca-app-pub-1444752230904711~2162382300");
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-1444752230904711/7829765668");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        String url = article.getLink();
-                Intent i = new Intent(getApplicationContext(), Share.class).putExtra("Link", article.getLink());
+                Intent i = new Intent(getApplicationContext(), Share.class).putExtra("Link",getIntent().getStringExtra("link"));
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(ViewPost.this, 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
@@ -56,21 +39,16 @@ public class ViewPost extends AppCompatActivity implements AppBarLayout.OnOffset
                                 getResources(), R.mipmap.back)).enableUrlBarHiding().setShowTitle(true);
 
                 CustomTabsIntent customTabsIntent = builder.build();
-                if (url == null) {
-                    url = getIntent().getStringExtra("link");
-                }
 
-        customTabsIntent.launchUrl(ViewPost.this, Uri.parse(url));
+
+
+        customTabsIntent.launchUrl(ViewPost.this, Uri.parse(getIntent().getStringExtra("link")));
                 }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
-        }
+
         finish();
     }
 

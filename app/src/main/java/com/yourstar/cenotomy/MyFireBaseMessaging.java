@@ -64,7 +64,6 @@ public class MyFireBaseMessaging extends FirebaseMessagingService {
       article.setLink(link);
         startup.setArticle(article);
         bitmap = getBitmapfromUrl(imageUri);
-
         sendNotification(message);
 
     }

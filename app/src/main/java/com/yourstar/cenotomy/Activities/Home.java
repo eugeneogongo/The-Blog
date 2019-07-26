@@ -5,16 +5,19 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import com.yourstar.cenotomy.Activities.Adapters.DrawerAdapter;
@@ -35,14 +38,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Arrays;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class Home extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener{
 
     private int kaluhi=0;
@@ -56,11 +51,11 @@ public class Home extends AppCompatActivity implements DrawerAdapter.OnItemSelec
     private SlidingRootNav slidingRootNav;
     private String[] screenTitles;
     private Drawable screenIcons;
-    private AdView mAdView;
-    private InterstitialAd mInterstitialAd;
+
+
     private boolean doubleBackToExitPressedOnce=false;
     boolean isaddshowin = false;
-
+boolean nointernet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,30 +66,11 @@ public class Home extends AppCompatActivity implements DrawerAdapter.OnItemSelec
         }else{
             showFragment(Articles.newInstance());
         }
-        PrepareAds();
-        initView(savedInstanceState);
-        MobileAds.initialize(this, "ca-app-pub-1444752230904711~2162382300");
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                } else {
-                    Log.d("TAG", "The interstitial wasn't loaded yet.");
-                }
-                PrepareAds();
-                }
-        }, 45000);
+        initView(savedInstanceState);
+
     }
-    void PrepareAds(){
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-1444752230904711/6513525000");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-    }
+
 
     private void initView(Bundle savedInstanceState) {
         txttoolbar = findViewById(R.id.txttoolbar);
@@ -174,18 +150,7 @@ switch (position){
             slidingRootNav.closeMenu();
             return;
 }
-        if (!isaddshowin) {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-                if (mInterstitialAd.isLoaded()) {
-                    isaddshowin = true;
-                }
 
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-            }
-            PrepareAds();
-        }
 
         showFragment(blog);
         slidingRootNav.closeMenu();
@@ -216,6 +181,9 @@ switch (position){
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(nointernet){
+            finish();
+        }
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             finish();
@@ -224,6 +192,7 @@ switch (position){
 
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
         showFragment(Articles.newInstance());
 
         new Handler().postDelayed(new Runnable() {
@@ -239,6 +208,7 @@ switch (position){
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(String event) {
        if(event== Constants.NotLoaded) {
+           nointernet =true;
            showFragment(NoInternet.newInstance());
        }else if(event==Constants.NetworkOn){
            showFragment(Articles.newInstance());

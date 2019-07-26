@@ -45,13 +45,7 @@ public class ArticlesViewModel extends ViewModel {
 
                    templist.addAll(arrayList);
 
-                   Collections.sort(templist, new Comparator<Article>() {
-                       @Override
-                       public int compare(Article v1, Article v2) {
-                           return v1.getPubDate().compareTo(v2.getPubDate());
-                       }
-
-                   });
+                   Collections.sort(templist, (v1, v2) -> v1.getPubDate().compareTo(v2.getPubDate()));
                    Collections.reverse(templist);
 
                    articlelist.postValue(templist);
@@ -59,11 +53,6 @@ public class ArticlesViewModel extends ViewModel {
 
                @Override
                public void onError() {
-                   List<Article> list = articlelist.getValue();
-                   assert list != null;
-                   if (list.size() == 0) {
-                       EventBus.getDefault().post(Constants.NotLoaded);
-                   }
 
 
                }

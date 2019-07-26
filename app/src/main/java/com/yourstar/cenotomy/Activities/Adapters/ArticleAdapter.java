@@ -158,8 +158,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View view) {
 
                 Intent intent = new Intent(mContext, ViewPost.class);
-                Startup strat = (Startup) mContext.getApplicationContext();
-                strat.setArticle(currentArticle);
+               intent.putExtra("link",currentArticle.getLink());
                 mContext.startActivity(intent);
 
 
